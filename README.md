@@ -24,6 +24,7 @@ Lo que se hara es dejar a un lado el hard coding y empezaremos con los datos din
 
 ### Clase 65: Using stateful lists
 En App.js importamos el "useState" para declararlo en la funcion princpial y poder dejar de tener ese array de objetos estatico, asi que sacamos ese array, lo nombramos como "DUMMY_EXPENSES" y creamos el nuevo array:
+
 `const [expenses, setExpenses] = useState(DUMMY_EXPENSES)`
 
 Recodar que la forma mas limpia para actualizar el estado seria asi:
@@ -38,3 +39,6 @@ const [expenses, setExpenses] = useState(DUMMY_EXPENSES)
   ```
 
   Ahora con esto se convierte en una lista dinamica.
+
+  ### Clase 66: Understanding "keys"
+  Como tenemos la aplicacion hasta ahora, en la consola nos aparece una "Key warning" la cual esta para asegurarse de que React pueda actualizar y renderizar dichas listas de manera eficiente sin perdidas de rendmiento o errores que pueden ocurrir. Lo que esta pasando en este momento es que cuando estamos agragando un gasto, es decir un nuevo elemento, React presenta este nuevo elemento como el ultimo elemento en la lista de los <div> y actualiza todos los elementos y reemplaza su contenido de modo que nuevamente coincia con el orden de los elementos en el array, esto puede llevar a problemas en el rendimiento y hasta a errores, por eso es que tenemos una manera de decirle a React donde queremos agregar un nuevo elemento, al identificarlos con ID unicas con esta propiedad: `key={expense.id}`
