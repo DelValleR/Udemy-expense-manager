@@ -42,3 +42,11 @@ const [expenses, setExpenses] = useState(DUMMY_EXPENSES)
 
   ### Clase 66: Understanding "keys"
   Como tenemos la aplicacion hasta ahora, en la consola nos aparece una "Key warning" la cual esta para asegurarse de que React pueda actualizar y renderizar dichas listas de manera eficiente sin perdidas de rendmiento o errores que pueden ocurrir. Lo que esta pasando en este momento es que cuando estamos agragando un gasto, es decir un nuevo elemento, React presenta este nuevo elemento como el ultimo elemento en la lista de los <div> y actualiza todos los elementos y reemplaza su contenido de modo que nuevamente coincia con el orden de los elementos en el array, esto puede llevar a problemas en el rendimiento y hasta a errores, por eso es que tenemos una manera de decirle a React donde queremos agregar un nuevo elemento, al identificarlos con ID unicas con esta propiedad: `key={expense.id}`
+
+  ### Assignment 3: Working with list
+  Pusimos a funcionar el filtro por año, asi que hay que transformar la fecha a un string para poder filtrarlo y hacer una funcion de esta manera:
+  ```JSX
+  const filteredExpenses = props.items.filter(expense => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+  ```
