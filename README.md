@@ -14,12 +14,12 @@ Lo que se hara es dejar a un lado el hard coding y empezaremos con los datos din
 
 ```JSX
 <{props.items.map((expense) => (
-          <ExpenseItem
-          title={expense.title}
-          amount={expense.amount}
-          date={expense.date}
-          />
-        ))}
+    <ExpenseItem
+    title={expense.title}
+    amount={expense.amount}
+    date={expense.date}
+    />
+  ))}
 ```
 
 ### Clase 65: Using stateful lists
@@ -38,15 +38,49 @@ const [expenses, setExpenses] = useState(DUMMY_EXPENSES)
   }
   ```
 
-  Ahora con esto se convierte en una lista dinamica.
+Ahora con esto se convierte en una lista dinamica.
 
-  ### Clase 66: Understanding "keys"
-  Como tenemos la aplicacion hasta ahora, en la consola nos aparece una "Key warning" la cual esta para asegurarse de que React pueda actualizar y renderizar dichas listas de manera eficiente sin perdidas de rendmiento o errores que pueden ocurrir. Lo que esta pasando en este momento es que cuando estamos agragando un gasto, es decir un nuevo elemento, React presenta este nuevo elemento como el ultimo elemento en la lista de los <div> y actualiza todos los elementos y reemplaza su contenido de modo que nuevamente coincia con el orden de los elementos en el array, esto puede llevar a problemas en el rendimiento y hasta a errores, por eso es que tenemos una manera de decirle a React donde queremos agregar un nuevo elemento, al identificarlos con ID unicas con esta propiedad: `key={expense.id}`
+### Clase 66: Understanding "keys"
+Como tenemos la aplicacion hasta ahora, en la consola nos aparece una "Key warning" la cual esta para asegurarse de que React pueda actualizar y renderizar dichas listas de manera eficiente sin perdidas de rendmiento o errores que pueden ocurrir. Lo que esta pasando en este momento es que cuando estamos agragando un gasto, es decir un nuevo elemento, React presenta este nuevo elemento como el ultimo elemento en la lista de los <div> y actualiza todos los elementos y reemplaza su contenido de modo que nuevamente coincia con el orden de los elementos en el array, esto puede llevar a problemas en el rendimiento y hasta a errores, por eso es que tenemos una manera de decirle a React donde queremos agregar un nuevo elemento, al identificarlos con ID unicas con esta propiedad: `key={expense.id}`
 
-  ### Assignment 3: Working with list
-  Pusimos a funcionar el filtro por año, asi que hay que transformar la fecha a un string para poder filtrarlo y hacer una funcion de esta manera:
-  ```JSX
-  const filteredExpenses = props.items.filter(expense => {
-    return expense.date.getFullYear().toString() === filteredYear;
-  });
-  ```
+### Assignment 3: Working with list
+Pusimos a funcionar el filtro por año, asi que hay que transformar la fecha a un string para poder filtrarlo y hacer una funcion de esta manera:
+```JSX
+const filteredExpenses = props.items.filter(expense => {
+  return expense.date.getFullYear().toString() === filteredYear;
+});
+```
+
+### Clase 67: Outputting Conditional Content
+Se pondra un mensaje cuando no haya nada que mostrar cuando se aplique el filtro por año.
+El contenido condicional consiste en generar diferentes resultqados en diferentes condiciones, en esta caso este seria el resultado en codigo:
+```JS
+{filteredExpenses.length === 0 ? (
+    <p>No expenses found.</p>
+  ) : (
+    filteredExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ))
+  )}
+```
+Aunque lo que podemos hacer para mantener el codigo aun mas limpio es generar una variable con un condicional para que este genere el mismo resultado que estamos haciendo arriba de este, pero teniendo un elemento mas reutilizable:
+```JS
+let expensesContent = <p>No expenses found.</p>;
+
+  if (filteredExpenses.length > 0) {
+    expensesContent = filteredExpenses.map((expense) => (
+      <ExpenseItem
+        key={expense.id}
+        title={expense.title}
+        amount={expense.amount}
+        date={expense.date}
+      />
+    ));
+  }
+```
+Y asi dentro del JSX return solo llamariamos la variable: `{expensesContent}`
