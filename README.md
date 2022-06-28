@@ -84,3 +84,6 @@ let expensesContent = <p>No expenses found.</p>;
   }
 ```
 Y asi dentro del JSX return solo llamariamos la variable: `{expensesContent}`
+
+### Clase 68: Adding conditional return statements
+Se agrega un nuevo componente para el filtro de la lista de gastos, para que quede mas limpio el espacio de trabajo en Expenses.js, el componente se llama ExpensesList (.js y .css) cambiamos la logica de este filtro, al eliminar la variable y encerrar los gastos en una lista por que le estamos pidiendo a toda la lista que se renderice de nuevo
