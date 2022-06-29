@@ -87,3 +87,27 @@ Y asi dentro del JSX return solo llamariamos la variable: `{expensesContent}`
 
 ### Clase 68: Adding conditional return statements
 Se agrega un nuevo componente para el filtro de la lista de gastos, para que quede mas limpio el espacio de trabajo en Expenses.js, el componente se llama ExpensesList (.js y .css) cambiamos la logica de este filtro, al eliminar la variable y encerrar los gastos en una lista por que le estamos pidiendo a toda la lista que se renderice de nuevo
+
+### Assignment 4
+Se va a renderizar el form condicionalmente y que no aparezca inmediatamente, que primero aparezca un boton que abra el form.
+Se agrega el boton en el JSX del archivo NewExpense.js, hay que agregar el state para que muestre condicionalmente o el boton o el formulario en este archivo, se necesita un true or false para que se decida si el estado se muestra o no, entonces asi declaramos el state primer: `const [isEditing, setIsEditing] = useState(false);`
+Ahora agregamos otra nueva funcion, la de start editing handler function que es la que dice que setIsEditing true y se aplica cuando el boton de Add New Expense se activa, lo que lleva a que se muestre el form.
+Al boton se le agrega el onClickcon el startEditingHandler, ahora hayq ue controlar cual se muestra con la funcion del useState, queremos mostrar el boton si no se esta editando, para lo que nos queda esta sintaxis: `{!isEditing && <button onClick={startEditingHandler}>Add New Expense</button>}` con el signo de exlamacion significa que si es falso el isEditing aparece el boton y cuando no es flaso aparece el form, por lo que se debe escribir asi: `{isEditing && <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />}`
+Teniendo listo esto, agregamos el boton de "Cancel" dentro de ExpenseForm.js al lado del de "Add Expense", con el tipo de boton "button" para que no haga el submit predeterminado y agregarle el onClick para hacer una funcion cuando se le presiona, pero no queremos que sea una funcion que se ejecuta dentro del archivo de ExpenseForm.js, si no del archivo de NewExpense.js por lo que creamos esta funcion:
+```JSX
+const stopEditingHandler = () => {
+  setIsEditing(false);
+}
+```
+y crear un pointer dentro del componente de ExpenseForm que quede asi: 
+```JSX  
+{isEditing && (
+  <ExpenseForm 
+    onSaveExpenseData={saveExpenseDataHandler} 
+    onCancel={stopEditingHandler} 
+  />
+)}
+```
+Y asi pasarle el props dentro del ExpenseForm.js al boton de "Cancel": `<button type='button' onClick={props.onCancel}>Cancel</button>`
+
+Tambien queremos cerrar el form cuando ha sido enviado, entonces en el saveExpenseDataHandler, debemos poner el setIsEditing falso
