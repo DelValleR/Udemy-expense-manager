@@ -88,6 +88,8 @@ Y asi dentro del JSX return solo llamariamos la variable: `{expensesContent}`
 ### Clase 68: Adding conditional return statements
 Se agrega un nuevo componente para el filtro de la lista de gastos, para que quede mas limpio el espacio de trabajo en Expenses.js, el componente se llama ExpensesList (.js y .css) cambiamos la logica de este filtro, al eliminar la variable y encerrar los gastos en una lista por que le estamos pidiendo a toda la lista que se renderice de nuevo
 
+## 29/06/2022
+
 ### Assignment 4
 Se va a renderizar el form condicionalmente y que no aparezca inmediatamente, que primero aparezca un boton que abra el form.
 Se agrega el boton en el JSX del archivo NewExpense.js, hay que agregar el state para que muestre condicionalmente o el boton o el formulario en este archivo, se necesita un true or false para que se decida si el estado se muestra o no, entonces asi declaramos el state primer: `const [isEditing, setIsEditing] = useState(false);`
@@ -111,3 +113,34 @@ y crear un pointer dentro del componente de ExpenseForm que quede asi:
 Y asi pasarle el props dentro del ExpenseForm.js al boton de "Cancel": `<button type='button' onClick={props.onCancel}>Cancel</button>`
 
 Tambien queremos cerrar el form cuando ha sido enviado, entonces en el saveExpenseDataHandler, debemos poner el setIsEditing falso
+
+### Clase 69: Demo App: Adding a Chart
+Se creara un grafico de barras, por lo que agregamos un nuevo componente llamado Chart, dentro del cual crearemos los archivos "Chart" y "ChartBar" con sus respectivos .js y .css.
+Comenzamos con el archivo de Chart, dentro del cual llamaremos con props al ChartBar dentro del JSX, entonces se generan las chartbar dinamicamente para pasar por una matriz de puntos de datos y mapear cada punto de datos a una chartbar, asi que se crearan chartbars tanto como se tengan dataPoints, esperamos que el valor del chartbar sea el valor del dataPoint y que asi mismo se pueda crear su maximo valor, tambien le agregamos la propiedad "key" por que ayuda a React a renderizar los elementos de una lista de manera eficiente, entonces queda escrito en codigo asi:
+```JSX
+const Chart = props => {
+  return <div className="chart">
+    {props.dataPoints.map(dataPoint => 
+    <ChartBar 
+    key={dataPoint.label}
+    value={dataPoint.value} 
+    maxValue={null}
+    label={dataPoint.label}
+    />
+    )}
+  </div>
+};
+```
+## 30/06/2022
+
+### Clase 70: Adding Dynamic Styles
+Se hara el estilo del chartbar, en el cual el grafico es dinamico, asi que comenzamos con el archivo ChartBar.js, dentro del cual creamos algunos div para dividir los componentes del grafico y tenemos que agregar una variable que dfenimos asi: ` let barFillHeight = '0%';` y despues hacemos una logica de JavaScript para que la grafica quede realmente dinamica, asi:
+```JS
+if (props.max < 0) {
+  barFillHeight = Math.round((props.value / props.maxValue) * 100) + '%';
+}
+```
+Despues agregamos el estilo de un elemento de forma dinamica y esto se puede hacer agregando el atributo de style añadiendo la funcion de JavaScript: 
+```JS
+<div className="chart-bar__fill" style={{ height: barFillHeight }}></div>
+```
